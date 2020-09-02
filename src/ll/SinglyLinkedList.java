@@ -1,4 +1,4 @@
-package com.mugilancodes.ll;
+package ll;
 
 public class SinglyLinkedList {
     Node head;

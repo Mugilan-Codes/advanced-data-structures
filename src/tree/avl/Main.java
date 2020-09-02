@@ -1,4 +1,4 @@
-package avltree;
+package tree.avl;
 
 import java.util.Scanner;
 

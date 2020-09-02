@@ -1,4 +1,4 @@
-package com.mugilancodes.bst;
+package tree.bs;
 
 public class BinarySearchTree {
 

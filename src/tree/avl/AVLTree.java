@@ -1,4 +1,4 @@
-package avltree;
+package tree.avl;
 
 // Explanation for Rotations
 // https://www.freecodecamp.org/news/avl-tree-insertion-rotation-and-balance

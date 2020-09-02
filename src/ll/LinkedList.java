@@ -1,4 +1,4 @@
-package com.mugilancodes.ll;
+package ll;
 
 // TODO - Also Do Doubly and Circular Linked List
 public class LinkedList {
