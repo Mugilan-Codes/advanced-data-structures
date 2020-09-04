@@ -30,7 +30,7 @@ public class Main {
                 case 3 -> {
                     System.out.print("Enter key to be searched: ");
                     int searchKey = input.nextInt();
-                    tree.search(searchKey);
+                    System.out.println("Search Result: " + tree.search(searchKey));
                     tree.display();
                 }
                 case 4 -> tree.countNodes();
