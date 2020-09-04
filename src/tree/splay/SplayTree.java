@@ -198,6 +198,10 @@ public class SplayTree {
         return null;
     }
 
+    public boolean search(int key) {
+        return findNode(key) != null;
+    }
+
     public void remove(int key) {
         Node node = findNode(key);
         remove(node);
@@ -212,5 +216,42 @@ public class SplayTree {
         count = 0;
     }
 
+    private int getCount() {
+        return count;
+    }
+
+    public int countNodes() {
+        return getCount();
+    }
+
+    private void printTree(Node root, String indent, boolean last) {
+        if(root != null) {
+            System.out.print(indent);
+            if(last) {
+                System.out.print("R---");
+                indent+="    ";
+            } else {
+                System.out.print("L---");
+                indent += "|   ";
+            }
+            System.out.println(root.key);
+            printTree(root.left, indent,false);
+            printTree(root.right, indent,true);
+        }
+    }
+
+    private Node getRoot() {
+        return root;
+    }
+
+    public void display() {
+        Node root = getRoot();
+        if(root == null) {
+            System.out.println("Tree is Empty");
+        } else {
+            System.out.println("Root Node Key = " + root.key);
+            printTree(root, "", true);
+        }
+    }
 
 }
