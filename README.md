@@ -9,3 +9,4 @@
 |   3   | [Singly Linked List](src/ll)      |
 |   4   | [Binary Search Tree](src/tree/bs) |
 |   5   | [AVL Tree](src/tree/avl)          |
+|   6   | [Splay Tree](src/tree/splay)          |
