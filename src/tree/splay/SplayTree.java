@@ -31,14 +31,14 @@ public class SplayTree {
         }
 
         if (yNode.parent != null) {
-            if(yNode==yNode.parent.left) {
+            if (yNode == yNode.parent.left) {
                 yNode.parent.left = xNode;
             } else {
                 yNode.parent.right = xNode;
             }
         }
 
-        if(xNode.right != null) {
+        if (xNode.right != null) {
             xNode.right.parent = yNode;
         }
 
@@ -54,14 +54,14 @@ public class SplayTree {
         }
 
         if (yNode.parent != null) {
-            if(yNode==yNode.parent.left) {
+            if (yNode == yNode.parent.left) {
                 yNode.parent.left = xNode;
             } else {
                 yNode.parent.right = xNode;
             }
         }
 
-        if(xNode.left != null) {
+        if (xNode.left != null) {
             xNode.left.parent = yNode;
         }
 
@@ -120,7 +120,7 @@ public class SplayTree {
 
         while (x != null) {
             y = x;
-            if(key > y.key) {
+            if (key > y.key) {
                 x = x.right;
             } else {
                 x = x.left;
@@ -130,9 +130,9 @@ public class SplayTree {
         x = new Node();
         x.key = key;
         x.parent = y;
-        if(y == null ) {
+        if (y == null) {
             root = x;
-        } else if(key > y.key) {
+        } else if (key > y.key) {
             y.right = x;
         } else {
             y.left = x;
@@ -143,29 +143,26 @@ public class SplayTree {
     }
 
     private void remove(Node node) {
-        System.out.println("Removing -> " + node);
-        if (node == null) {
-            return;
-        }
+        System.out.println("Removing -> " + node.key);
 
         splay(node);
 
-        if(node.left != null && node.right != null) {
+        if (node.left != null && node.right != null) {
             Node min = node.left;
-            while(min.right != null) {
+            while (min.right != null) {
                 min = min.right;
             }
             min.right = node.right;
             node.right.parent = min;
             node.left.parent = null;
             root = node.left;
-        } else if(node.right != null) {
+        } else if (node.right != null) {
             node.right.parent = null;
             root = node.right;
         } else if (node.left != null) {
             node.left.parent = null;
             root = node.left;
-        }else {
+        } else {
             root = null;
         }
 
@@ -181,17 +178,17 @@ public class SplayTree {
         Node x = root;
         while (x != null) {
             prevNode = x;
-            if(key > x.key) {
+            if (key > x.key) {
                 x = x.right;
-            } else if(key < x.key) {
+            } else if (key < x.key) {
                 x = x.left;
-            } else if(key == x.key) {
+            } else {
                 splay(x);
                 return x;
             }
         }
 
-        if(prevNode != null) {
+        if (prevNode != null) {
             splay(prevNode);
             return null;
         }
@@ -204,11 +201,11 @@ public class SplayTree {
 
     public void remove(int key) {
         Node node = findNode(key);
-        remove(node);
-    }
-
-    public boolean isEmpty() {
-        return root == null;
+        if (node == null) {
+            System.out.println(key + " not found.");
+        } else {
+            remove(node);
+        }
     }
 
     public void clear() {
@@ -220,23 +217,23 @@ public class SplayTree {
         return count;
     }
 
-    public int countNodes() {
-        return getCount();
+    public void countNodes() {
+        System.out.println("No. of Nodes = " + getCount());
     }
 
     private void printTree(Node root, String indent, boolean last) {
-        if(root != null) {
+        if (root != null) {
             System.out.print(indent);
-            if(last) {
+            if (last) {
                 System.out.print("R---");
-                indent+="    ";
+                indent += "    ";
             } else {
                 System.out.print("L---");
                 indent += "|   ";
             }
             System.out.println(root.key);
-            printTree(root.left, indent,false);
-            printTree(root.right, indent,true);
+            printTree(root.left, indent, false);
+            printTree(root.right, indent, true);
         }
     }
 
@@ -246,7 +243,7 @@ public class SplayTree {
 
     public void display() {
         Node root = getRoot();
-        if(root == null) {
+        if (root == null) {
             System.out.println("Tree is Empty");
         } else {
             System.out.println("Root Node Key = " + root.key);
