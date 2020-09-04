@@ -27,7 +27,7 @@ public class SplayTree {
 
     private void makeLeftChildParent(Node xNode, Node yNode) {
         if (xNode == null || yNode == null || yNode.left != xNode || xNode.parent != yNode) {
-            throw new RuntimeException("Wrong");
+            throw new RuntimeException("Error in makeLeftChildParent()");
         }
 
         if (yNode.parent != null) {
@@ -50,7 +50,7 @@ public class SplayTree {
 
     private void makeRightChildParent(Node xNode, Node yNode) {
         if (xNode == null || yNode == null || yNode.right != xNode || xNode.parent != yNode) {
-            throw new RuntimeException("Wrong");
+            throw new RuntimeException("Error in makeRightChildParent()");
         }
 
         if (yNode.parent != null) {
