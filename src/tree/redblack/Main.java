@@ -1,23 +1,34 @@
 package tree.redblack;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
 
         RedBlackTree rbt = new RedBlackTree();
+        Scanner sc = new Scanner(System.in);
+        boolean isDone = false;
 
-        rbt.insert(45);
-        rbt.printTree();
-        rbt.insert(65);
-        rbt.printTree();
-        rbt.insert(55);
-        rbt.printTree();
-        rbt.insert(35);
-        rbt.printTree();
-        rbt.insert(25);
-        rbt.printTree();
-        rbt.insert(75);
-        rbt.printTree();
+        while (!isDone) {
+            System.out.println("1 - Insert\n4 - Print Tree\n7 - Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Enter the key to be inserted: ");
+                    rbt.insert(sc.nextInt());
+                    rbt.printTree();
+                }
+                case 4 -> rbt.printTree();
+                case 7 -> {
+                    isDone = true;
+                    System.out.println("Exiting the Red-Black Tree...");
+                }
+                default -> System.out.println("Invalid Choice");
+            }
+        }
 
     }
 
