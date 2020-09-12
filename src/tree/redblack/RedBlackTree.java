@@ -169,4 +169,133 @@ public class RedBlackTree {
         System.out.println();
     }
 
+    private void rbTransplant(Node x, Node y) {
+        if(x.parent == null) {
+            root = y;
+        } else if (x == x.parent.left) {
+            x.parent.left = y;
+        } else {
+            x.parent.right = y;
+        }
+        y.parent = x.parent;
+    }
+
+    private Node minimum(Node node) {
+        while(node.left != TNULL) {
+            node = node.left;
+        }
+        return node;
+    }
+
+    private void fixDelete(Node node) {
+        Node temp;
+        while(node != root && node.color == 0) {
+            if(node == node.parent.left) {
+                temp = node.parent.right;
+                if(temp.color == 1) {
+                    temp.color = 0;
+                    node.parent.color = 1;
+                    leftRotate(node.parent);
+                    temp = node.parent.right;
+                }
+
+                if(temp.left.color == 0  && temp.right.color == 0) {
+                    temp.color = 1;
+                    node = node.parent;
+                } else {
+                    if(temp.right.color == 0) {
+                        temp.left.color = 0;
+                        temp.color = 1;
+                        rightRotate(temp);
+                        temp = node.parent.right;
+                    }
+
+                    temp.color = node.parent.color;
+                    node.parent.color = 0;
+                    temp.right.color = 0;
+                    leftRotate(node.parent);
+                    node = root;
+                }
+            } else {
+                temp = node.parent.left;
+                if(temp.color == 1) {
+                    temp.color = 0;
+                    node.parent.color = 1;
+                    rightRotate(node.parent);
+                    temp = node.parent.left;
+                }
+
+                if(temp.left.color == 0 && temp.right.color == 0) {
+                    temp.color = 1;
+                    node = node.parent;
+                } else {
+                    if(temp.left.color == 0) {
+                        temp.right.color = 0;
+                        temp.color = 1;
+                        leftRotate(temp);
+                        temp = node.parent.left;
+                    }
+
+                    temp.color = node.parent.color;
+                    node.parent.color = 0;
+                    temp.left.color = 0;
+                    rightRotate(node.parent);
+                    node = root;
+                }
+            }
+        }
+        node.color = 0;
+    }
+
+    private void deleteNodeHelper(Node node, int key) {
+        Node z = TNULL;
+        Node x, y;
+        while (node != TNULL) {
+            if(node.key == key) {
+                z = node;
+            }
+
+            if(node.key <= key) {
+                node = node.right;
+            } else {
+                node = node.left;
+            }
+        }
+
+        if(z == TNULL) {
+            System.out.println("Key " + key + " not found");
+            return;
+        }
+
+        y =z;
+        int yOriginalColor = y.color;
+        if(z.left == TNULL) {
+            x = z.right;
+            rbTransplant(z, z.right);
+        } else if(z.right == TNULL) {
+            x = z.left;
+            rbTransplant(z, z.left);
+        } else {
+            y = minimum(z.right);
+            yOriginalColor = y.color;
+            x = y.right;
+            if(y.parent == z) {
+                x.parent = y;
+            } else {
+                rbTransplant(z, y);
+                y.left = z.left;
+                y.left.parent = y;
+                y.color = z.color;
+            }
+
+            if(yOriginalColor == 0) {
+                fixDelete(x);
+            }
+        }
+    }
+
+    public void deleteNode(int key) {
+        deleteNodeHelper(this.root, key);
+    }
+
 }

@@ -11,7 +11,7 @@ public class Main {
         boolean isDone = false;
 
         while (!isDone) {
-            System.out.println("1 - Insert\n4 - Print Tree\n7 - Exit");
+            System.out.println("1 - Insert\n2 - Delete\n4 - Print Tree\n7 - Exit");
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
 
@@ -19,6 +19,11 @@ public class Main {
                 case 1 -> {
                     System.out.print("Enter the key to be inserted: ");
                     rbt.insert(sc.nextInt());
+                    rbt.printTree();
+                }
+                case 2 -> {
+                    System.out.println("Enter the key to be deleted: ");
+                    rbt.deleteNode(sc.nextInt());
                     rbt.printTree();
                 }
                 case 4 -> rbt.printTree();
