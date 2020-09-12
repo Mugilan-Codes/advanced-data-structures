@@ -3,7 +3,7 @@ package tree.redblack;
 public class RedBlackTree {
 
     class Node {
-        int key, color;
+        int data, color;
         Node left, right, parent;
     }
 
@@ -22,82 +22,79 @@ public class RedBlackTree {
         System.out.println("Right Rotate");
         Node y = x.left;
         x.left = y.right;
-        if(y.right != TNULL) {
+        if (y.right != TNULL) {
             y.right.parent = x;
         }
         y.parent = x.parent;
-        if(x.parent == null) {
+        if (x.parent == null) {
             this.root = y;
-        } else if(x == x.parent.right) {
+        } else if (x == x.parent.right) {
             x.parent.right = y;
-        } else{
+        } else {
             x.parent.left = y;
         }
         y.right = x;
         x.parent = y;
-//        printTree();
     }
 
     private void leftRotate(Node x) {
         System.out.println("Left Rotate");
         Node y = x.right;
         x.right = y.left;
-        if(y.left != TNULL) {
+        if (y.left != TNULL) {
             y.left.parent = x;
         }
         y.parent = x.parent;
-        if(x.parent == null) {
+        if (x.parent == null) {
             this.root = y;
-        } else if(x == x.parent.left) {
+        } else if (x == x.parent.left) {
             x.parent.left = y;
-        } else{
+        } else {
             x.parent.right = y;
         }
         y.left = x;
         x.parent = y;
-//        printTree();
     }
 
-    private void fixInsert(Node node) {
+    private void fixInsert(Node k) {
         System.out.println("Fixing Insert");
-        Node temp;
-        Node Parent = node.parent;
-        Node GrandParent = Parent.parent;
-        while(Parent.color == 1) {
-            if(Parent== GrandParent.right) {
-                temp = GrandParent.left;
-                if(temp.color == 1) {
-                    temp.color = 0;
-                    Parent.color = 0;
-                    GrandParent.color = 1;
-                    node = GrandParent;
+        Node u;
+        while (k.parent.color == 1) {
+            if (k.parent == k.parent.parent.right) {
+                u = k.parent.parent.left;
+                if (u.color == 1) {
+                    u.color = 0;
+                    k.parent.color = 0;
+                    k.parent.parent.color = 1;
+                    k = k.parent.parent;
                 } else {
-                    if(node == Parent.left) {
-                        node = Parent;
-                        rightRotate(node);
+                    if (k == k.parent.left) {
+                        k = k.parent;
+                        rightRotate(k);
                     }
-                    Parent.color = 0;
-                    GrandParent.color = 1;
-                    leftRotate(GrandParent);
+                    k.parent.color = 0;
+                    k.parent.parent.color = 1;
+                    leftRotate(k.parent.parent);
                 }
             } else {
-                temp = GrandParent.right;
-                if(temp.color == 1) {
-                    temp.color = 0;
-                    Parent.color = 0;
-                    GrandParent.color = 1;
-                    node = GrandParent;
+                u = k.parent.parent.right;
+
+                if (u.color == 1) {
+                    u.color = 0;
+                    k.parent.color = 0;
+                    k.parent.parent.color = 1;
+                    k = k.parent.parent;
                 } else {
-                    if (node == Parent.right) {
-                        node = Parent;
-                        leftRotate(node);
+                    if (k == k.parent.right) {
+                        k = k.parent;
+                        leftRotate(k);
                     }
-                    Parent.color = 0;
-                    GrandParent.color = 1;
-                    rightRotate(GrandParent);
+                    k.parent.color = 0;
+                    k.parent.parent.color = 1;
+                    rightRotate(k.parent.parent);
                 }
             }
-            if(node == root) {
+            if (k == root) {
                 break;
             }
         }
@@ -108,7 +105,7 @@ public class RedBlackTree {
         System.out.println("Inserting -> " + key);
         Node node = new Node();
         node.parent = null;
-        node.key = key;
+        node.data = key;
         node.left = TNULL;
         node.right = TNULL;
         node.color = 1;
@@ -118,7 +115,7 @@ public class RedBlackTree {
 
         while (x != TNULL) {
             y = x;
-            if (node.key < x.key) {
+            if (node.data < x.data) {
                 x = x.left;
             } else {
                 x = x.right;
@@ -128,7 +125,7 @@ public class RedBlackTree {
         node.parent = y;
         if (y == null) {
             root = node;
-        } else if (node.key < y.key) {
+        } else if (node.data < y.data) {
             y.left = node;
         } else {
             y.right = node;
@@ -147,9 +144,9 @@ public class RedBlackTree {
     }
 
     private void printHelper(Node root, String indent, boolean last) {
-        if(root != TNULL) {
+        if (root != TNULL) {
             System.out.print(indent);
-            if(last) {
+            if (last) {
                 System.out.print("R----");
                 indent += "   ";
             } else {
@@ -157,140 +154,142 @@ public class RedBlackTree {
                 indent += "|  ";
             }
 
-            String sColor = root.color == 1 ? "RED":"BLACK";
-            System.out.println(root.key + "("+sColor+")");
-            printHelper(root.left,indent, false);
+            String sColor = root.color == 1 ? "RED" : "BLACK";
+            System.out.println(root.data + "(" + sColor + ")");
+            printHelper(root.left, indent, false);
             printHelper(root.right, indent, true);
         }
     }
 
     public void printTree() {
         printHelper(this.root, "", true);
-        System.out.println();
     }
 
-    private void rbTransplant(Node x, Node y) {
-        if(x.parent == null) {
-            root = y;
-        } else if (x == x.parent.left) {
-            x.parent.left = y;
+    private void rbTransplant(Node u, Node v) {
+        if (u.parent == null) {
+            root = v;
+        } else if (u == u.parent.left) {
+            u.parent.left = v;
         } else {
-            x.parent.right = y;
+            u.parent.right = v;
         }
-        y.parent = x.parent;
+        v.parent = u.parent;
     }
 
     private Node minimum(Node node) {
-        while(node.left != TNULL) {
+        while (node.left != TNULL) {
             node = node.left;
         }
         return node;
     }
 
-    private void fixDelete(Node node) {
-        Node temp;
-        while(node != root && node.color == 0) {
-            if(node == node.parent.left) {
-                temp = node.parent.right;
-                if(temp.color == 1) {
-                    temp.color = 0;
-                    node.parent.color = 1;
-                    leftRotate(node.parent);
-                    temp = node.parent.right;
+    private void fixDelete(Node x) {
+        Node s;
+        while (x != root && x.color == 0) {
+            if (x == x.parent.left) {
+                s = x.parent.right;
+                if (s.color == 1) {
+                    s.color = 0;
+                    x.parent.color = 1;
+                    leftRotate(x.parent);
+                    s = x.parent.right;
                 }
 
-                if(temp.left.color == 0  && temp.right.color == 0) {
-                    temp.color = 1;
-                    node = node.parent;
+                if (s.left.color == 0 && s.right.color == 0) {
+                    s.color = 1;
+                    x = x.parent;
                 } else {
-                    if(temp.right.color == 0) {
-                        temp.left.color = 0;
-                        temp.color = 1;
-                        rightRotate(temp);
-                        temp = node.parent.right;
+                    if (s.right.color == 0) {
+                        s.left.color = 0;
+                        s.color = 1;
+                        rightRotate(s);
+                        s = x.parent.right;
                     }
 
-                    temp.color = node.parent.color;
-                    node.parent.color = 0;
-                    temp.right.color = 0;
-                    leftRotate(node.parent);
-                    node = root;
+                    s.color = x.parent.color;
+                    x.parent.color = 0;
+                    s.right.color = 0;
+                    leftRotate(x.parent);
+                    x = root;
                 }
             } else {
-                temp = node.parent.left;
-                if(temp.color == 1) {
-                    temp.color = 0;
-                    node.parent.color = 1;
-                    rightRotate(node.parent);
-                    temp = node.parent.left;
+                s = x.parent.left;
+                if (s.color == 1) {
+                    s.color = 0;
+                    x.parent.color = 1;
+                    rightRotate(x.parent);
+                    s = x.parent.left;
                 }
 
-                if(temp.left.color == 0 && temp.right.color == 0) {
-                    temp.color = 1;
-                    node = node.parent;
+                if (s.right.color == 0 && s.right.color == 0) {
+                    s.color = 1;
+                    x = x.parent;
                 } else {
-                    if(temp.left.color == 0) {
-                        temp.right.color = 0;
-                        temp.color = 1;
-                        leftRotate(temp);
-                        temp = node.parent.left;
+                    if (s.left.color == 0) {
+                        s.right.color = 0;
+                        s.color = 1;
+                        leftRotate(s);
+                        s = x.parent.left;
                     }
 
-                    temp.color = node.parent.color;
-                    node.parent.color = 0;
-                    temp.left.color = 0;
-                    rightRotate(node.parent);
-                    node = root;
+                    s.color = x.parent.color;
+                    x.parent.color = 0;
+                    s.left.color = 0;
+                    rightRotate(x.parent);
+                    x = root;
                 }
             }
         }
-        node.color = 0;
+        x.color = 0;
     }
 
     private void deleteNodeHelper(Node node, int key) {
         Node z = TNULL;
         Node x, y;
         while (node != TNULL) {
-            if(node.key == key) {
+            if (node.data == key) {
                 z = node;
             }
 
-            if(node.key <= key) {
+            if (node.data <= key) {
                 node = node.right;
             } else {
                 node = node.left;
             }
         }
 
-        if(z == TNULL) {
-            System.out.println("Key " + key + " not found");
+        if (z == TNULL) {
+            System.out.println("Couldn't find key in the tree");
             return;
         }
 
-        y =z;
+        y = z;
         int yOriginalColor = y.color;
-        if(z.left == TNULL) {
+        if (z.left == TNULL) {
             x = z.right;
             rbTransplant(z, z.right);
-        } else if(z.right == TNULL) {
+        } else if (z.right == TNULL) {
             x = z.left;
             rbTransplant(z, z.left);
         } else {
             y = minimum(z.right);
             yOriginalColor = y.color;
             x = y.right;
-            if(y.parent == z) {
+            if (y.parent == z) {
                 x.parent = y;
             } else {
-                rbTransplant(z, y);
-                y.left = z.left;
-                y.left.parent = y;
-                y.color = z.color;
+                rbTransplant(y, y.right);
+                y.right = z.right;
+                y.right.parent = y;
             }
 
-            if(yOriginalColor == 0) {
-                fixDelete(x);
-            }
+            rbTransplant(z, y);
+            y.left = z.left;
+            y.left.parent = y;
+            y.color = z.color;
+        }
+        if (yOriginalColor == 0) {
+            fixDelete(x);
         }
     }
 

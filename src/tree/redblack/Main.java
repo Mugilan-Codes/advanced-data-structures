@@ -22,7 +22,7 @@ public class Main {
                     rbt.printTree();
                 }
                 case 2 -> {
-                    System.out.println("Enter the key to be deleted: ");
+                    System.out.print("Enter the key to be deleted: ");
                     rbt.deleteNode(sc.nextInt());
                     rbt.printTree();
                 }
