@@ -11,3 +11,4 @@
 |   5   | [AVL Tree](src/tree/avl)          |
 |   6   | [Splay Tree](src/tree/splay)          |
 |   7   | [Red-Black Tree](src/tree/redblack)          |
+|   8   | [Bellman Ford's Algorithm](src/algo/graph/bellman_ford)          |
