@@ -16,22 +16,25 @@ public class Main {
             int choice = sc.nextInt();
 
             switch (choice) {
-                case 1 -> {
+                case 1:
                     System.out.print("Enter the key to be inserted: ");
                     rbt.insert(sc.nextInt());
                     rbt.printTree();
-                }
-                case 2 -> {
+                    break;
+                case 2:
                     System.out.print("Enter the key to be deleted: ");
                     rbt.deleteNode(sc.nextInt());
                     rbt.printTree();
-                }
-                case 3 -> rbt.printTree();
-                case 4 -> {
+                    break;
+                case 3:
+                    rbt.printTree();
+                    break;
+                case 4:
                     isDone = true;
                     System.out.println("Exiting the Red-Black Tree...");
-                }
-                default -> System.out.println("Invalid Choice");
+                    break;
+                default:
+                    System.out.println("Invalid Choice");
             }
         }
 

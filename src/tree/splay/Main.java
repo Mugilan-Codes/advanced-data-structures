@@ -15,34 +15,37 @@ public class Main {
             System.out.print("Enter your choice: ");
             int choice = input.nextInt();
             switch (choice) {
-                case 1 -> {
+                case 1:
                     System.out.print("Enter key to be inserted: ");
                     int insertKey = input.nextInt();
                     tree.insert(insertKey);
                     tree.display();
-                }
-                case 2 -> {
+                    break;
+                case 2:
                     System.out.print("Enter key to be removed: ");
                     int removeKey = input.nextInt();
                     tree.remove(removeKey);
                     tree.display();
-                }
-                case 3 -> {
+                    break;
+                case 3:
                     System.out.print("Enter key to be searched: ");
                     int searchKey = input.nextInt();
                     System.out.println("Search Result: " + tree.search(searchKey));
                     tree.display();
-                }
-                case 4 -> tree.countNodes();
-                case 5 -> {
+                    break;
+                case 4:
+                    tree.countNodes();
+                    break;
+                case 5:
                     tree.clear();
                     tree.display();
-                }
-                case 6 -> {
+                    break;
+                case 6:
                     isDone = true;
                     System.out.println("Exiting the Splay Tree");
-                }
-                default -> System.out.println("Invalid Choice");
+                    break;
+                default:
+                    System.out.println("Invalid Choice");
             }
         }
 

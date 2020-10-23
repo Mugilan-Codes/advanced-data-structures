@@ -18,28 +18,33 @@ public class Main {
             System.out.print("Enter your Choice: ");
             int choice = input.nextInt();
             switch (choice) {
-                case 1 -> {
+                case 1:
                     System.out.print("Enter a Key to be inserted: ");
                     int insertKey = input.nextInt();
                     tree.insert(insertKey);
-                }
-                case 2 -> {
+                    break;
+                case 2:
                     System.out.print("Enter a Key to be deleted: ");
                     int deleteKey = input.nextInt();
                     tree.delete(deleteKey);
-                }
-                case 3 -> {
+                    break;
+                case 3:
                     System.out.print("Enter a Key to be inserted: ");
                     int findKey = input.nextInt();
                     tree.find(findKey);
-                }
-                case 4 -> System.out.println("Height of the tree is " + tree.height());
-                case 5 -> tree.display();
-                case 6 -> {
+                    break;
+                case 4:
+                    System.out.println("Height of the tree is " + tree.height());
+                    break;
+                case 5:
+                    tree.display();
+                    break;
+                case 6:
                     isDone = true;
                     System.out.println("Exiting the AVL Tree...");
-                }
-                default -> System.out.println("Invalid Choice");
+                    break;
+                default:
+                    System.out.println("Invalid Choice");
             }
         }
 
